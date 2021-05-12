@@ -398,3 +398,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,python,venv,visualstudiocode,django,pycharm+all
+ltv_prediction.cmd
