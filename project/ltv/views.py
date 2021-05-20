@@ -5,18 +5,22 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .controllers import make_pipeline
+from .predrction import predict
 
 
 def index(request):
     return render(request, "ltv/index.html")
 
 
-def test(request):
-    temp = MongoDbManager().get_users_from_collection(
-        {"ad_id": "cfc31233-e5f7-4eb2-a442-0b2df5f2f83f"}
-    )
-    context = {"item": temp[0]}
-    return render(request, "ltv/test.html", context)
+def income_predict(request):
+    predict_list = predict()
+    result = {
+        "predict_list": predict_list,
+        "sum": sum(predict_list),
+        "average": sum(predict_list) / len(predict_list),
+    }
+
+    return HttpResponse(json.dumps(result), status=200)
 
 
 @csrf_exempt
@@ -69,10 +73,10 @@ def weekday_analysis(request):
         ]
         pipeline = make_pipeline("weekday", percentile)
         result = list(MongoDbManager().database.aggregate(pipeline))
+        result.sort(key=lambda x: x["_id"])
         for item in result:
             item["weekday"] = week[item["_id"]]
             del item["_id"]
-        print(result)
 
         return HttpResponse(json.dumps(result), status=200)
 

@@ -2,6 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from model import CustomModel, RMSE, RMSLE, MAPE
 
 
 def main():

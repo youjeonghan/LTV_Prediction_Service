@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [
     path("", views.index),
-    path("test/", views.test),
-    path("api/json", views.test_json),
+    path("api/json/", views.test_json),
+    path("api/prediction/", views.income_predict),
     path("api/device-os/analysis/", views.device_os_analysis),
     path("api/weekday/analysis/", views.weekday_analysis),
     path("api/device-name/analysis/", views.device_name_analysis),
