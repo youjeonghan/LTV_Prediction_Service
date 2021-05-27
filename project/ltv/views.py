@@ -13,14 +13,11 @@ def index(request):
 
 
 def income_predict(request):
-    predict_list = predict()
-    result = {
-        "predict_list": predict_list,
-        "sum": sum(predict_list),
-        "average": sum(predict_list) / len(predict_list),
-    }
+    predict_list = predict(
+        request.GET["from"], request.GET["to"], request.GET["percentile"]
+    )
 
-    return HttpResponse(json.dumps(result), status=200)
+    return HttpResponse(json.dumps(predict_list), status=200)
 
 
 @csrf_exempt
