@@ -1,15 +1,16 @@
 /*!
  * 
- *         Build Date :: 2021. 5. 27. 오후 11:02:44
- *         Commit Version :: 0bfda0b
+ *         Build Date :: 2021. 5. 29. 오후 5:31:00
+ *         Commit Version :: f75932e
  *         Auth.name :: Lee-3-8
  *
  */
 .App-logo {
   height: 40px;
-  background: rgba(255,255,255,.2);
+  background: rgba(255, 255, 255, 0.2);
   margin: 16px 28px;
-} 
+}
+
 /*!
  * 
  * antd v4.15.6
