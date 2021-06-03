@@ -13,9 +13,7 @@ def index(request):
 
 
 def income_predict(request):
-    predict_list = predict(
-        request.GET["from"], request.GET["to"], request.GET["percentile"]
-    )
+    predict_list = predict(request.GET["from"], request.GET["to"], request.GET["percentile"])
 
     return HttpResponse(json.dumps(predict_list), status=200)
 
@@ -32,9 +30,7 @@ def test_json(request):
         temp = MongoDbManager().get_users_from_collection(
             {"ad_id": "cfc31233-e5f7-4eb2-a442-0b2df5f2f83f"}
         )
-        return HttpResponse(
-            json.dumps({"id": temp[0]["ad_id"]}, default=str), status=200
-        )
+        return HttpResponse(json.dumps({"id": temp[0]["ad_id"]}, default=str), status=200)
 
     else:
         return HttpResponse(status=405)
@@ -42,9 +38,7 @@ def test_json(request):
 
 def device_os_analysis(request):
     if request.method == "GET":
-        percentile = int(
-            MongoDbManager().database_len * float(request.GET["percentile"])
-        )
+        percentile = int(MongoDbManager().database_len * float(request.GET["percentile"]))
         pipeline = make_pipeline("device_operating_system_version", percentile)
         result = list(MongoDbManager().database.aggregate(pipeline))
         for item in result:
@@ -56,9 +50,7 @@ def device_os_analysis(request):
 
 def weekday_analysis(request):
     if request.method == "GET":
-        percentile = int(
-            MongoDbManager().database_len * float(request.GET["percentile"])
-        )
+        percentile = int(MongoDbManager().database_len * float(request.GET["percentile"]))
         week = [
             "Monday",
             "Tuesday",
@@ -80,14 +72,16 @@ def weekday_analysis(request):
 
 def device_name_analysis(request):
     if request.method == "GET":
-        percentile = int(
-            MongoDbManager().database_len * float(request.GET["percentile"])
-        )
+        percentile = int(MongoDbManager().database_len * float(request.GET["percentile"]))
         pipeline = make_pipeline("device_mobile_marketing_name", percentile)
         result = list(MongoDbManager().database.aggregate(pipeline))
+        print(result)
         for item in result:
             if item["_id"] == None:
                 item["device_name"] = "Uncertain"
+                # None 제거 코드
+                item["count"] = 0
+                item["percentile"] = 0
             else:
                 item["device_name"] = item["_id"]
             del item["_id"]
@@ -96,9 +90,7 @@ def device_name_analysis(request):
 
 def region_analysis(request):
     if request.method == "GET":
-        percentile = int(
-            MongoDbManager().database_len * float(request.GET["percentile"])
-        )
+        percentile = int(MongoDbManager().database_len * float(request.GET["percentile"]))
         pipeline = make_pipeline("geo_region", percentile)
         result = list(MongoDbManager().database.aggregate(pipeline))
         for item in result:
@@ -112,13 +104,11 @@ def region_analysis(request):
 
 def time_analysis(request):
     if request.method == "GET":
-        percentile = int(
-            MongoDbManager().database_len * float(request.GET["percentile"])
-        )
+        percentile = int(MongoDbManager().database_len * float(request.GET["percentile"]))
         pipeline = make_pipeline("hour", percentile)
         result = list(MongoDbManager().database.aggregate(pipeline))
         for item in result:
-            item["hour"] = item["_id"]
+            item["hour"] = (int(item["_id"]) + 13) % 24
             del item["_id"]
         result.sort(key=lambda x: x["hour"])
 
