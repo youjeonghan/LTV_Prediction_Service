@@ -14,7 +14,7 @@
 ![image](https://user-images.githubusercontent.com/57481424/122574780-ff2aee80-d08a-11eb-840d-4fa36f2bd354.png)<br/>
 **👉 Deep Learning Loss : 0.0065**
 
-위의 Loss 값들이 매우 작은 이유는 해당 광고의 수입을 예측하여 달러로 치환하여 구현했기 때문입니다.
+※ 위의 Loss 값들이 매우 작은 이유는 해당 광고의 수입을 예측하여 달러로 치환하여 구현했기 때문입니다.
 
 <br/>
 
